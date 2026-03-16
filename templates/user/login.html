@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Employee Attendance</title>
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+
+body{
+font-family: Arial, Helvetica, sans-serif;
+background: linear-gradient(135deg,#2c3e50,#4ca1af);
+min-height:100vh;
+display:flex;
+align-items:center;
+justify-content:center;
+margin:0;
+padding:20px;
+}
+
+.container{
+background:white;
+padding:40px;
+width:360px;
+max-width:100%;
+border-radius:10px;
+box-shadow:0 10px 25px rgba(0,0,0,0.2);
+text-align:center;
+}
+
+h2{
+margin-bottom:25px;
+color:#333;
+}
+
+input{
+width:100%;
+padding:12px;
+margin-bottom:20px;
+border:1px solid #ccc;
+border-radius:5px;
+font-size:16px;
+box-sizing:border-box;
+}
+
+.buttons{
+display:flex;
+justify-content:space-between;
+gap:10px;
+}
+
+button{
+flex:1;
+padding:12px;
+border:none;
+border-radius:5px;
+font-size:15px;
+cursor:pointer;
+color:white;
+}
+
+.entry{
+background:#27ae60;
+}
+
+.exit{
+background:#e74c3c;
+}
+
+button:hover{
+opacity:0.9;
+}
+
+.status{
+margin-top:15px;
+font-size:14px;
+color:#555;
+}
+
+.footer{
+margin-top:20px;
+font-size:13px;
+color:#888;
+}
+
+/* MOBILE VIEW */
+
+@media (max-width:480px){
+
+.container{
+padding:30px 20px;
+}
+
+.buttons{
+flex-direction:column;
+}
+
+button{
+width:100%;
+font-size:16px;
+}
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="container">
+
+<h2>Employee Attendance</h2>
+
+<input type="text" id="user_id" placeholder="Enter Employee ID">
+<input type="password" id="password" placeholder="Enter Password">
+
+<div class="buttons">
+<button class="entry" onclick="markEntry()">Mark Entry</button>
+<button class="exit" onclick="markExit()">Mark Exit</button>
+</div>
+
+<div class="status" id="status"></div>
+
+<div class="footer">
+Location based attendance system
+</div>
+
+</div>
+
+<script>
+
+function getLocation(callback){
+
+document.getElementById("status").innerText="Getting location...";
+
+navigator.geolocation.getCurrentPosition(function(position){
+
+let lat = position.coords.latitude;
+let lon = position.coords.longitude;
+
+callback(lat,lon)
+
+},
+function(){
+alert("Location permission required")
+},
+{
+enableHighAccuracy:true
+})
+
+}
+
+function markEntry(){
+
+getLocation(function(lat,lon){
+
+let user = document.getElementById("user_id").value
+let pass = document.getElementById("password").value
+
+fetch("/attendance/mark-entry/",{
+method:"POST",
+headers:{
+"Content-Type":"application/x-www-form-urlencoded",
+"X-CSRFToken":"{{ csrf_token }}"
+},
+body:`user_id=${user}&password=${pass}&latitude=${lat}&longitude=${lon}`
+})
+.then(res=>res.json())
+.then(data=>{
+alert(data.status)
+document.getElementById("status").innerText=data.status
+})
+
+})
+
+}
+
+function markExit(){
+
+getLocation(function(lat,lon){
+
+let user = document.getElementById("user_id").value
+let pass = document.getElementById("password").value
+
+fetch("/attendance/mark-exit/",{
+method:"POST",
+headers:{
+"Content-Type":"application/x-www-form-urlencoded",
+"X-CSRFToken":"{{ csrf_token }}"
+},
+body:`user_id=${user}&password=${pass}&latitude=${lat}&longitude=${lon}`
+})
+.then(res=>res.json())
+.then(data=>{
+alert(data.status)
+document.getElementById("status").innerText=data.status
+})
+
+})
+
+}
+
+</script>
+
+</body>
+</html>

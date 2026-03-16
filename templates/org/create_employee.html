@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Create Employee</title>
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+
+body{
+font-family: Arial, Helvetica, sans-serif;
+background:#f4f6f8;
+margin:0;
+}
+
+/* NAVBAR */
+
+.navbar{
+background:#2c3e50;
+color:white;
+padding:15px 25px;
+display:flex;
+justify-content:space-between;
+align-items:center;
+position:relative;
+}
+
+.navbar h2{
+margin:0;
+font-size:20px;
+}
+
+.nav-links{
+display:flex;
+gap:20px;
+}
+
+.nav-links a{
+color:white;
+text-decoration:none;
+font-weight:bold;
+}
+
+.nav-links a:hover{
+text-decoration:underline;
+}
+
+/* HAMBURGER */
+
+.hamburger{
+display:none;
+font-size:24px;
+cursor:pointer;
+}
+
+/* PAGE CONTENT */
+
+.container{
+display:flex;
+justify-content:center;
+align-items:center;
+height:85vh;
+padding:20px;
+}
+
+/* FORM CARD */
+
+.card{
+background:white;
+padding:35px;
+width:350px;
+border-radius:10px;
+box-shadow:0 8px 20px rgba(0,0,0,0.1);
+text-align:center;
+}
+
+.card h2{
+margin-bottom:25px;
+}
+
+/* INPUTS */
+
+input{
+width:100%;
+padding:10px;
+margin-bottom:15px;
+border:1px solid #ccc;
+border-radius:5px;
+font-size:15px;
+}
+
+/* BUTTON */
+
+button{
+background:#27ae60;
+color:white;
+border:none;
+padding:12px;
+width:100%;
+border-radius:5px;
+font-size:16px;
+cursor:pointer;
+}
+
+button:hover{
+background:#219150;
+}
+
+/* MOBILE */
+
+@media (max-width:768px){
+
+.nav-links{
+display:none;
+flex-direction:column;
+background:#2c3e50;
+position:absolute;
+top:60px;
+left:0;
+width:100%;
+padding:15px 0;
+}
+
+.nav-links a{
+padding:10px 20px;
+border-top:1px solid rgba(255,255,255,0.2);
+}
+
+.nav-links.show{
+display:flex;
+}
+
+.hamburger{
+display:block;
+}
+
+.container{
+height:auto;
+margin-top:40px;
+}
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<!-- NAVBAR -->
+
+<div class="navbar">
+
+<h2>Geo Attendance - Org Panel</h2>
+
+<div class="hamburger" onclick="toggleMenu()">
+☰
+</div>
+
+<div class="nav-links" id="navMenu">
+
+<a href="/org/dashboard/">Dashboard</a>
+<a href="/org/employees/">Employees</a>
+<a href="/org/create-employee/">Create Employee</a>
+<a href="/org/logout/">Logout</a>
+
+</div>
+
+</div>
+
+
+<!-- PAGE CONTENT -->
+
+<div class="container">
+
+<div class="card">
+
+<h2>Create Employee</h2>
+
+<form method="post">
+{% csrf_token %}
+
+<input name="name" placeholder="Employee Name" required>
+
+<input name="password" type="password" placeholder="Password" required>
+
+<button type="submit">Create Employee</button>
+
+</form>
+
+</div>
+
+</div>
+
+
+<script>
+
+function toggleMenu(){
+document.getElementById("navMenu").classList.toggle("show")
+}
+
+</script>
+
+</body>
+</html>

@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+<title>Geo Attendance System</title>
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+
+body{
+font-family:Arial, Helvetica, sans-serif;
+background:linear-gradient(135deg,#2c3e50,#4ca1af);
+margin:0;
+min-height:100vh;
+display:flex;
+align-items:center;
+justify-content:center;
+padding:20px;
+}
+
+.container{
+text-align:center;
+color:white;
+width:100%;
+max-width:900px;
+}
+
+h1{
+margin-bottom:40px;
+font-size:36px;
+}
+
+/* CARDS */
+
+.cards{
+display:flex;
+gap:40px;
+justify-content:center;
+flex-wrap:wrap;
+}
+
+.card{
+background:white;
+color:#333;
+width:260px;
+padding:30px;
+border-radius:10px;
+box-shadow:0 10px 25px rgba(0,0,0,0.2);
+}
+
+.card h2{
+margin-bottom:20px;
+}
+
+button{
+width:100%;
+padding:12px;
+margin-top:10px;
+border:none;
+border-radius:5px;
+font-size:15px;
+cursor:pointer;
+}
+
+/* BUTTON COLORS */
+
+.employee-btn{
+background:#27ae60;
+color:white;
+}
+
+.employee-btn:hover{
+background:#1f8f4c;
+}
+
+.org-login{
+background:#3498db;
+color:white;
+}
+
+.org-login:hover{
+background:#2f86c1;
+}
+
+.org-register{
+background:#9b59b6;
+color:white;
+}
+
+.org-register:hover{
+background:#83489c;
+}
+
+.footer{
+margin-top:40px;
+font-size:14px;
+opacity:0.8;
+}
+
+
+/* MOBILE VIEW */
+
+@media (max-width:768px){
+
+h1{
+font-size:28px;
+margin-bottom:30px;
+}
+
+.cards{
+flex-direction:column;
+align-items:center;
+gap:25px;
+}
+
+.card{
+width:90%;
+max-width:320px;
+padding:25px;
+}
+
+button{
+font-size:16px;
+padding:14px;
+}
+
+.footer{
+font-size:13px;
+margin-top:30px;
+}
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="container">
+
+<h1>Geo Attendance System</h1>
+
+<div class="cards">
+
+<!-- Employee -->
+
+<div class="card">
+
+<h2>Employee</h2>
+
+<a href="/user/login/">
+<button class="employee-btn">Employee Login</button>
+</a>
+
+</div>
+
+
+<!-- Organization -->
+
+<div class="card">
+
+<h2>Organization</h2>
+
+<a href="/org/register/">
+<button class="org-register">Register Organization</button>
+</a>
+
+<a href="/org/login/">
+<button class="org-login">Organization Login</button>
+</a>
+
+</div>
+
+</div>
+
+<div class="footer">
+Location Based Attendance System
+</div>
+
+</div>
+
+</body>
+</html>

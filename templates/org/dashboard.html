@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Organization Dashboard</title>
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+
+body{
+font-family: Arial, sans-serif;
+margin:0;
+background:#f4f6f8;
+}
+
+/* NAVBAR */
+
+.navbar{
+background:#2c3e50;
+color:white;
+padding:15px 25px;
+display:flex;
+justify-content:space-between;
+align-items:center;
+position:relative;
+}
+
+.navbar h2{
+margin:0;
+font-size:20px;
+}
+
+.nav-links{
+display:flex;
+gap:20px;
+}
+
+.nav-links a{
+color:white;
+text-decoration:none;
+font-weight:bold;
+}
+
+.nav-links a:hover{
+text-decoration:underline;
+}
+
+.hamburger{
+display:none;
+font-size:24px;
+cursor:pointer;
+}
+
+/* CONTENT */
+
+.container{
+padding:30px;
+}
+
+/* STAT CARDS */
+
+.stats{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+gap:20px;
+margin-bottom:30px;
+}
+
+.card{
+padding:22px;
+border-radius:10px;
+box-shadow:0 6px 15px rgba(0,0,0,0.15);
+transition:transform 0.2s ease;
+position:relative;
+overflow:hidden;
+color:rgb(255, 255, 255);
+}
+
+.card:hover{
+transform:translateY(-5px);
+}
+
+.card h2{
+margin:0;
+font-size:34px;
+font-weight:bold;
+}
+
+.card p{
+margin-top:5px;
+font-size:15px;
+}
+
+.card .icon{
+position:absolute;
+right:20px;
+top:18px;
+font-size:42px;
+opacity:0.25;
+}
+
+/* CARD COLORS */
+
+.total{
+background:linear-gradient(135deg,#4e54c8,#8f94fb);
+}
+
+.present{
+background:linear-gradient(135deg,#11998e,#38ef7d);
+}
+
+.absent{
+background:linear-gradient(135deg,#ff416c,#ff4b2b);
+}
+
+.entries{
+background:linear-gradient(135deg,#f7971e,#ffd200);
+color: rgb(255, 255, 255);
+}
+
+/* PRESENT ABSENT LIST */
+
+.lists{
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:20px;
+margin-bottom:30px;
+}
+
+.list-box{
+background:white;
+padding:20px;
+border-radius:8px;
+box-shadow:0 3px 10px rgba(0,0,0,0.1);
+}
+
+.present-box{
+background:#eafaf1;
+border-left:6px solid #27ae60;
+}
+
+.present-box h3{
+color:#27ae60;
+}
+
+.absent-box{
+background:#fdecea;
+border-left:6px solid #e74c3c;
+}
+
+.absent-box h3{
+color:#e74c3c;
+}
+
+.list-box ul{
+padding-left:18px;
+}
+
+/* FILTER */
+
+.filter-box{
+background:white;
+border:1px solid #ddd;
+padding:15px;
+margin-bottom:20px;
+border-radius:6px;
+}
+
+.filter-box form{
+display:flex;
+flex-wrap:wrap;
+gap:10px;
+}
+
+.filter-box input{
+padding:8px;
+border:1px solid #ccc;
+border-radius:4px;
+}
+
+/* BUTTONS */
+
+button{
+padding:8px 15px;
+border:none;
+border-radius:4px;
+cursor:pointer;
+}
+
+button[type="submit"]{
+background:#3498db;
+color:white;
+}
+
+button[name="export"]{
+background:#27ae60;
+color:white;
+}
+
+/* TABLE */
+
+.table-wrapper{
+overflow-x:auto;
+}
+
+table{
+width:100%;
+border-collapse:collapse;
+background:white;
+}
+
+th, td{
+border:1px solid #ddd;
+padding:10px;
+text-align:center;
+}
+
+th{
+background:#eee;
+}
+
+/* MOBILE */
+
+@media(max-width:768px){
+
+.container{
+padding:20px;
+}
+
+/* navbar menu */
+
+.nav-links{
+display:none;
+flex-direction:column;
+background:#2c3e50;
+position:absolute;
+top:60px;
+left:0;
+width:100%;
+}
+
+.nav-links a{
+padding:12px 20px;
+border-top:1px solid rgba(255,255,255,0.2);
+}
+
+.nav-links.show{
+display:flex;
+}
+
+.hamburger{
+display:block;
+}
+
+/* cards */
+
+.stats{
+grid-template-columns:1fr;
+}
+
+/* lists */
+
+.lists{
+grid-template-columns:1fr;
+}
+
+/* filter */
+
+.filter-box form{
+flex-direction:column;
+}
+
+.filter-box input{
+width:100%;
+}
+
+button{
+width:100%;
+}
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="navbar">
+
+<h2>Geo Attendance - Org Panel</h2>
+
+<div class="hamburger" onclick="toggleMenu()">☰</div>
+
+<div class="nav-links" id="navMenu">
+<a href="/org/dashboard/">Dashboard</a>
+<a href="/org/employees/">Employees</a>
+<a href="/org/create-employee/">Create Employee</a>
+<a href="/org/logout/">Logout</a>
+</div>
+
+</div>
+
+<div class="container">
+
+<h2>Today's Overview</h2>
+
+<div class="stats">
+
+<div class="card total">
+<h2>{{ total_employees }}</h2>
+<p>Total Employees</p>
+</div>
+
+<div class="card present">
+<h2>{{ present_today }}</h2>
+<p>Present Today</p>
+</div>
+
+<div class="card absent">
+<h2>{{ absent_today }}</h2>
+<p>Absent Today</p>
+</div>
+
+<div class="card entries">
+<h2>{{ records|length }}</h2>
+<p>Total Entries Today</p>
+</div>
+
+</div>
+
+<div class="lists">
+
+<div class="list-box present-box">
+<h3>Present Employees</h3>
+<ul>
+{% for p in present_list %}
+<li>{{ p.employee.name }}</li>
+{% empty %}
+<li>No attendance yet</li>
+{% endfor %}
+</ul>
+</div>
+
+<div class="list-box absent-box">
+<h3>Absent Employees</h3>
+<ul>
+{% for a in absent_list %}
+<li>{{ a.name }}</li>
+{% empty %}
+<li>Everyone present</li>
+{% endfor %}
+</ul>
+</div>
+
+</div>
+
+
+<h2>Today's Attendance</h2>
+
+<table>
+
+<tr>
+<th>Employee</th>
+<th>Date</th>
+<th>Entry</th>
+<th>Exit</th>
+</tr>
+
+{% for r in records %}
+
+<tr>
+<td>{{ r.employee.name }}</td>
+<td>{{ r.date }}</td>
+<td>{{ r.entry_time }}</td>
+<td>{{ r.exit_time }}</td>
+</tr>
+
+{% empty %}
+
+<tr>
+<td colspan="4">No attendance yet today</td>
+</tr>
+
+{% endfor %}
+
+</table>
+
+
+<h2 style="margin-top:40px">Attendance History</h2>
+
+<div class="filter-box">
+
+<form method="get">
+
+<input type="text" name="name" placeholder="Employee Name" value="{{ request.GET.name }}">
+
+<input type="date" name="date" value="{{ request.GET.date }}">
+
+<input type="date" name="start" value="{{ request.GET.start }}">
+
+<input type="date" name="end" value="{{ request.GET.end }}">
+
+<button type="submit">Filter</button>
+
+<button type="submit" name="export" value="1">
+Download Excel
+</button>
+
+</form>
+
+</div>
+
+</div>
+
+<script>
+
+function toggleMenu(){
+document.getElementById("navMenu").classList.toggle("show")
+}
+
+</script>
+
+</body>
+</html>

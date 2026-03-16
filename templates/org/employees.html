@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Employees</title>
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+
+body{
+font-family: Arial, Helvetica, sans-serif;
+background:#f4f6f8;
+margin:0;
+}
+
+/* NAVBAR */
+
+.navbar{
+background:#2c3e50;
+color:white;
+padding:15px 25px;
+display:flex;
+justify-content:space-between;
+align-items:center;
+position:relative;
+}
+
+.navbar h2{
+margin:0;
+font-size:20px;
+}
+
+.nav-links{
+display:flex;
+gap:20px;
+}
+
+.nav-links a{
+color:white;
+text-decoration:none;
+font-weight:bold;
+}
+
+.nav-links a:hover{
+text-decoration:underline;
+}
+
+/* HAMBURGER */
+
+.hamburger{
+display:none;
+font-size:24px;
+cursor:pointer;
+}
+
+/* PAGE CONTENT */
+
+.container{
+padding:30px;
+}
+
+/* HEADER */
+
+.header{
+display:flex;
+justify-content:space-between;
+align-items:center;
+margin-bottom:25px;
+flex-wrap:wrap;
+gap:10px;
+}
+
+.add-btn{
+background:#27ae60;
+color:white;
+padding:10px 16px;
+border-radius:5px;
+text-decoration:none;
+font-weight:bold;
+}
+
+.add-btn:hover{
+background:#219150;
+}
+
+/* TABLE */
+
+.table-wrapper{
+overflow-x:auto;
+}
+
+table{
+width:100%;
+border-collapse:collapse;
+background:white;
+box-shadow:0 5px 15px rgba(0,0,0,0.1);
+}
+
+th, td{
+padding:12px;
+text-align:center;
+border-bottom:1px solid #ddd;
+}
+
+th{
+background:#ecf0f1;
+}
+
+tr:hover{
+background:#f9f9f9;
+}
+
+/* MOBILE */
+
+@media (max-width:768px){
+
+.nav-links{
+display:none;
+flex-direction:column;
+background:#2c3e50;
+position:absolute;
+top:60px;
+left:0;
+width:100%;
+padding:15px 0;
+}
+
+.nav-links a{
+padding:10px 20px;
+border-top:1px solid rgba(255,255,255,0.2);
+}
+
+.nav-links.show{
+display:flex;
+}
+
+.hamburger{
+display:block;
+}
+
+.container{
+padding:20px;
+}
+
+.header{
+flex-direction:column;
+align-items:flex-start;
+}
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<!-- NAVBAR -->
+
+<div class="navbar">
+
+<h2>Geo Attendance - Org Panel</h2>
+
+<div class="hamburger" onclick="toggleMenu()">
+☰
+</div>
+
+<div class="nav-links" id="navMenu">
+
+<a href="/org/dashboard/">Dashboard</a>
+<a href="/org/employees/">Employees</a>
+<a href="/org/create-employee/">Create Employee</a>
+<a href="/org/logout/">Logout</a>
+
+</div>
+
+</div>
+
+
+<!-- CONTENT -->
+
+<div class="container">
+
+<div class="header">
+
+<h2>Employees</h2>
+
+<a class="add-btn" href="/org/create-employee/">+ Add Employee</a>
+
+</div>
+
+<div class="table-wrapper">
+
+<table>
+
+<tr>
+<th>ID</th>
+<th>Name</th>
+<th>User ID</th>
+<th>Password</th>
+</tr>
+
+{% for e in employees %}
+
+<tr>
+<td>{{ e.id }}</td>
+<td>{{ e.name }}</td>
+<td>{{ e.user_id }}</td>
+<td>{{ e.password }}</td>
+</tr>
+
+{% empty %}
+
+<tr>
+<td colspan="4">No employees found</td>
+</tr>
+
+{% endfor %}
+
+</table>
+
+</div>
+
+</div>
+
+
+<script>
+
+function toggleMenu(){
+document.getElementById("navMenu").classList.toggle("show")
+}
+
+</script>
+
+</body>
+</html>
