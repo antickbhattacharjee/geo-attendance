@@ -1,0 +1,321 @@
+# 📍 Geo Attendance System
+
+A **GPS-based Employee Attendance Management System** built using **Django**.
+The system allows organizations to manage employees and track attendance based on **geolocation verification**. Employees can mark entry and exit only when they are within the **allowed office radius**, ensuring accurate and secure attendance tracking.
+
+---
+
+# 🚀 Project Overview
+
+Traditional attendance systems often rely on manual entry or biometric devices, which may not be suitable for remote teams or distributed workplaces.
+
+This project introduces a **location-aware attendance platform** where employees can mark attendance from their devices only when they are physically present within the organization's defined geographic area.
+
+The system verifies location coordinates and ensures employees cannot mark attendance outside the designated location.
+
+---
+
+# 🧠 Core Concept
+
+The system uses a **Geo-fencing mechanism**:
+
+1. Organization registers its **office coordinates (latitude & longitude)**.
+2. A **radius (meters)** defines the allowed attendance zone.
+3. When an employee marks attendance:
+
+   * The system fetches the employee's current GPS location.
+   * It calculates the distance between the employee and office location.
+4. If the employee is **within the allowed radius**, attendance is marked.
+
+Distance calculation uses the **Haversine Formula**.
+
+---
+
+# 🛠 Technology Stack
+
+## Backend
+
+* Python
+* Django Framework
+
+## Frontend
+
+* HTML
+* CSS
+* JavaScript
+
+## Database
+
+* SQLite (Development)
+* PostgreSQL (Production recommended)
+
+## Libraries Used
+
+* Pandas (for Excel export)
+* OpenPyXL (Excel file support)
+* Gunicorn (production server)
+* WhiteNoise (static file serving)
+
+---
+
+# 📂 Project Structure
+
+```
+geo_attendance/
+│
+├── accounts/           # Employee model
+├── attendance/         # Attendance logic
+├── org/                # Organization management
+│
+├── static/             # CSS / JS / Images
+├── templates/          # HTML templates
+│
+├── geo_attendance/
+│   ├── settings.py
+│   ├── urls.py
+│   ├── wsgi.py
+│
+├── manage.py
+├── requirements.txt
+├── Procfile
+└── README.md
+```
+
+---
+
+# ⚙️ Features
+
+## 👨‍💼 Organization Features
+
+* Organization registration
+* Organization login
+* Employee creation
+* Employee management
+* Attendance dashboard
+* Present/Absent overview
+* Attendance history
+* Export attendance to Excel
+
+## 👨‍🔧 Employee Features
+
+* Login system
+* GPS-based entry
+* GPS-based exit
+* Location validation
+
+## 📊 Dashboard Features
+
+* Total employees
+* Employees present today
+* Employees absent today
+* Attendance records
+* Attendance filters
+* Excel export
+
+---
+
+# 📍 Geo-Location Attendance Logic
+
+The system calculates the distance between the employee's device and the organization's registered location.
+
+### Distance Formula
+
+```
+distance = R × c
+
+where
+
+R = Earth radius (6371000 meters)
+
+c = 2 × atan2( √a , √(1−a) )
+
+a = sin²(Δφ/2) + cos φ1 × cos φ2 × sin²(Δλ/2)
+```
+
+If:
+
+```
+distance ≤ organization radius
+```
+
+Attendance is allowed.
+
+Otherwise:
+
+```
+Attendance rejected
+```
+
+---
+
+# 🧾 Attendance Workflow
+
+### Entry Process
+
+1. Employee logs in
+2. Device location is captured
+3. Coordinates sent to server
+4. Distance calculated
+5. Entry marked if within allowed radius
+
+### Exit Process
+
+1. Employee presses exit button
+2. Exit time recorded
+3. Attendance updated
+
+---
+
+# 📊 Dashboard Analytics
+
+The organization dashboard provides:
+
+* Employee list
+* Present employee list
+* Absent employee list
+* Attendance history
+* Date filtering
+* Employee name filtering
+* Date range filtering
+* Excel export
+
+---
+
+# 📤 Export Feature
+
+Attendance records can be exported as **Excel files**.
+
+Export includes:
+
+* Employee Name
+* Date
+* Entry Time
+* Exit Time
+
+The system generates the Excel file dynamically using **Pandas DataFrame**.
+
+---
+
+# 🔐 Security Considerations
+
+Current implementation includes:
+
+* Session based authentication
+* Organization based data filtering
+* Restricted employee access
+
+Future improvements may include:
+
+* Token authentication
+* Anti-GPS spoofing
+* Device fingerprint verification
+
+---
+
+# 🧪 Development Setup
+
+### Clone Repository
+
+```
+git clone https://github.com/yourusername/geo-attendance.git
+```
+
+### Navigate to Project
+
+```
+cd geo-attendance
+```
+
+### Create Virtual Environment
+
+```
+python -m venv venv
+```
+
+Activate environment
+
+```
+venv\Scripts\activate
+```
+
+### Install Dependencies
+
+```
+pip install -r requirements.txt
+```
+
+### Run Migrations
+
+```
+python manage.py migrate
+```
+
+### Start Server
+
+```
+python manage.py runserver
+```
+
+Application will run at:
+
+```
+http://127.0.0.1:8000
+```
+
+---
+
+# ☁️ Deployment
+
+Recommended deployment stack:
+
+Server:
+
+* Render / Railway / VPS
+
+Database:
+
+* PostgreSQL (Neon / Supabase)
+
+Production server:
+
+* Gunicorn
+
+Static file handling:
+
+* WhiteNoise
+
+---
+
+# 📈 Future Improvements
+
+Possible enhancements:
+
+* Mobile application integration
+* Face recognition verification
+* GPS spoof detection
+* Biometric attendance integration
+* Real-time employee tracking
+* Attendance reports and analytics
+* Leave management system
+* Payroll integration
+
+---
+
+# 👨‍💻 Author
+
+**Antick Bhattacharjee**
+
+Corporate Trainer & Full Stack Developer
+Developer at BEST CRM APP
+
+---
+
+# 📜 License
+
+This project is open-source and available for educational and research purposes.
+
+---
+
+# ⭐ Support
+
+If you find this project useful, consider giving it a ⭐ on GitHub.
